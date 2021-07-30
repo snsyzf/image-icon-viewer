@@ -1,13 +1,29 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        maven("https://maven.aliyun.com/repository/central")
+        maven("https://maven.aliyun.com/repository/google")
+        maven("https://maven.aliyun.com/repository/jcenter")
+        maven("https://maven.aliyun.com/repository/spring")
+        maven("https://maven.aliyun.com/repository/gradle-plugin")
+        maven("https://maven.aliyun.com/repository/spring-plugin")
+        mavenCentral()
+    }
+}
+
 plugins {
-    id("org.jetbrains.intellij") version "0.7.2"
-    kotlin("jvm") version "1.4.32"
+    id("org.jetbrains.intellij") version "1.1.2"
+    kotlin("jvm") version "1.5.10"
 }
 
 group = "com.gitee.plugins"
-version = "1.0.6"
+version = "1.0.7"
 
 repositories {
-    mavenCentral()
+    maven("https://maven.aliyun.com/repository/central")
+    maven("https://maven.aliyun.com/repository/google")
+    maven("https://maven.aliyun.com/repository/jcenter")
+    maven("https://maven.aliyun.com/repository/spring")
 }
 
 dependencies {
@@ -18,13 +34,13 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = "2021.1"
+    this.version.set("2021.2")
 }
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes(file("changenotes.html").readText(Charsets.UTF_8))
-    version(project.version)
-    sinceBuild("193.*")
+    this.changeNotes.set(file("changenotes.html").readText(Charsets.UTF_8))
+    this.version.set(project.version.toString())
+    this.sinceBuild.set("193.*")
 }
