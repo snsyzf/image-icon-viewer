@@ -12,12 +12,12 @@ buildscript {
 }
 
 plugins {
-    id("org.jetbrains.intellij") version "1.1.2"
-    kotlin("jvm") version "1.5.10"
+    id("org.jetbrains.intellij") version "1.3.0"
+    kotlin("jvm") version "1.6.0"
 }
 
 group = "com.gitee.plugins"
-version = "1.0.7"
+version = "1.0.8"
 
 repositories {
     maven("https://maven.aliyun.com/repository/central")
@@ -28,8 +28,6 @@ repositories {
 
 dependencies {
     compileOnly(kotlin("stdlib"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
@@ -43,4 +41,5 @@ tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml
     this.changeNotes.set(file("changenotes.html").readText(Charsets.UTF_8))
     this.version.set(project.version.toString())
     this.sinceBuild.set("193.*")
+    this.untilBuild.set("213.*")
 }
