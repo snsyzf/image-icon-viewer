@@ -37,6 +37,10 @@
     <change-notes><![CDATA[
         <h1>Change notes</h1>
         <br>
+         <h2>1.0.10</h2>
+        <ul>
+            <li>Supported 2022.2</li>
+        </ul>
         <h2>1.0.9</h2>
         <ul>
             <li>Supported 2022.1</li>
