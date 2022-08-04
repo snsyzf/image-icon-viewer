@@ -43,5 +43,7 @@ tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml
 }
 
 tasks.getByName<org.jetbrains.intellij.tasks.PublishPluginTask>("publishPlugin") {
-    this.token.set(project.property("token").toString())
+    if (project.hasProperty("token")) {
+        this.token.set(project.property("token").toString())
+    }
 }
