@@ -3,62 +3,6 @@
     <name>Image Icon Viewer</name>
     <vendor email="snsyzf@gmail.com" url="https://gitee.com/snsyzf/image-icon-viewer">snsyzf</vendor>
 
-    <description><![CDATA[
-        <h1>Image Icon Viewer</h1>
-        <br/>
-        <h2>Preview project images right inside the Project View or Tabs.</h2>
-        <br/>
-        Supported extensions by
-        <a href="https://docs.oracle.com/javase/8/docs/api/javax/imageio/ImageIO.html#getReaderFileSuffixes--">ImageIO.getReaderFileSuffixes()</a>
-        <br>
-        If you need to add more supported image types:
-        <ol>
-            <li>
-                Download library from: <a href="https://haraldk.github.io/TwelveMonkeys/">TwelveMonkeys</a><br>
-            </li>
-
-            <li>
-                Put the jar in the lib directory under the IDEA installation directory
-            </li>
-        </ol>
-        <p>The default supported extension are: </p>
-        <br/>
-        <ul>
-            <li>*.gif</li>
-            <li>*.png</li>
-            <li>*.bmp</li>
-            <li>*.jpg</li>
-            <li>*.wbmp</li>
-            <li>*.svg</li>
-        </ul>
-        ]]>
-    </description>
-
-    <change-notes><![CDATA[
-        <h1>Change notes</h1>
-        <br>
-         <h2>1.0.10</h2>
-        <ul>
-            <li>Supported 2022.2</li>
-        </ul>
-        <h2>1.0.9</h2>
-        <ul>
-            <li>Supported 2022.1</li>
-        </ul>
-        <h2>1.0.8</h2>
-        <ul>
-            <li>Supported 2021.3</li>
-        </ul>
-        <h2>1.0.6</h2>
-        <ul>
-            <li>Supported 2021.1</li>
-        </ul>
-        <h2>1.0.5</h2>
-        <ul>
-            <li>Supported 2020.3</li>
-        </ul>
-        ]]></change-notes>
-
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>

@@ -22,6 +22,8 @@ repositories {
 
 dependencies {
     compileOnly(kotlin("stdlib"))
+
+    implementation("com.twelvemonkeys.imageio:imageio-batik:3.8.2")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
@@ -34,5 +36,12 @@ tasks.getByName<Test>("test") {
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
     this.version.set(project.version.toString())
     this.sinceBuild.set("193.*")
-    this.untilBuild.set("222.*")
+    this.untilBuild.set("293.*")
+
+    this.changeNotes.set(file("changenotes.html").readText())
+    this.pluginDescription.set(file("description.html").readText())
+}
+
+tasks.getByName<org.jetbrains.intellij.tasks.PublishPluginTask>("publishPlugin") {
+    this.token.set(project.property("token").toString())
 }
