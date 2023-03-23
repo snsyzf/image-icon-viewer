@@ -9,6 +9,10 @@ import java.awt.RenderingHints
 import java.awt.image.BufferedImage
 import javax.swing.Icon
 
+/**
+ * ImageIconProvider.
+ * @author yzf
+ */
 class ScaleIcon(icon: Icon, width: Int = 16, height: Int = 16) : Icon {
 
     private val image: BufferedImage = ImageUtil.createImage(width, height, BufferedImage.TYPE_4BYTE_ABGR)
