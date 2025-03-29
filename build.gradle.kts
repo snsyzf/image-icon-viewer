@@ -1,9 +1,13 @@
+import org.jetbrains.intellij.platform.gradle.tasks.PatchPluginXmlTask
+import org.jetbrains.intellij.platform.gradle.tasks.PublishPluginTask
+
 buildscript {
     repositories {
         maven("https://maven.aliyun.com/repository/central")
         maven("https://maven.aliyun.com/repository/google")
         maven("https://maven.aliyun.com/repository/jcenter")
         maven("https://maven.aliyun.com/repository/spring")
+        maven("https://www.jetbrains.com/intellij-repository/releases/")
         maven("https://maven.aliyun.com/repository/gradle-plugin")
         maven("https://maven.aliyun.com/repository/spring-plugin")
         mavenCentral()
@@ -12,44 +16,53 @@ buildscript {
 }
 
 plugins {
-    id("org.jetbrains.intellij") version "1.13.2"
-    id("org.jetbrains.kotlin.jvm") version "1.7.22"
+//    id("org.jetbrains.intellij") version "1.17.4"
+    id("org.jetbrains.intellij.platform") version "2.3.0"
+    id("org.jetbrains.kotlin.jvm") version "2.1.20"
 }
 
 group = "com.gitee.plugins"
-version = "1.0.11"
+version = "1.0.12"
 
 repositories {
     maven("https://maven.aliyun.com/repository/central")
     maven("https://maven.aliyun.com/repository/google")
     maven("https://maven.aliyun.com/repository/jcenter")
     maven("https://maven.aliyun.com/repository/spring")
+    maven("https://www.jetbrains.com/intellij-repository/releases/")
+    intellijPlatform {
+        defaultRepositories()
+    }
     mavenCentral()
 }
 
 dependencies {
+    intellijPlatform {
+        intellijIdeaCommunity("2024.3.4")
+    }
+
     compileOnly(kotlin("stdlib"))
-    implementation("com.twelvemonkeys.imageio:imageio-batik:3.9.4")
+    implementation("com.twelvemonkeys.imageio:imageio-batik:3.12.0")
+    implementation("org.apache.xmlgraphics:batik-transcoder:1.18")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
-intellij {
-    this.version.set("2022.3")
-}
+
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
-tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    this.version.set(project.version.toString())
-    this.sinceBuild.set("193.*")
-    this.untilBuild.set("293.*")
 
+
+tasks.withType<PatchPluginXmlTask>() {
+    this.pluginVersion.set(project.version.toString())
+//    this.untilBuild.set("")
     this.changeNotes.set(file("changenotes.html").readText())
     this.pluginDescription.set(file("description.html").readText())
 }
 
-tasks.getByName<org.jetbrains.intellij.tasks.PublishPluginTask>("publishPlugin") {
+tasks.withType<PublishPluginTask>() {
     if (project.hasProperty("token")) {
         this.token.set(project.property("token").toString())
     }
 }
+
