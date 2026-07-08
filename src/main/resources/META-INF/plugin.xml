@@ -8,8 +8,8 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
-        <iconProvider implementation="com.gitee.plugins.iconviewer.ImageIconProvider"/>
+        <iconProvider implementation="com.gitee.plugins.iconviewer.ImageIconProvider" order="first"/>
+        <fileIconProvider implementation="com.gitee.plugins.iconviewer.ImageFileIconProvider" order="first"/>
     </extensions>
 
     <actions>
