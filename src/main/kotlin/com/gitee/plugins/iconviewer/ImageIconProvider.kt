@@ -2,6 +2,7 @@ package com.gitee.plugins.iconviewer
 
 import com.intellij.ide.IconProvider
 import com.intellij.openapi.project.DumbAware
+import com.intellij.openapi.components.service
 import com.intellij.psi.PsiElement
 import javax.swing.Icon
 
@@ -13,6 +14,6 @@ class ImageIconProvider : IconProvider(), DumbAware {
 
     override fun getIcon(psiElement: PsiElement, flags: Int): Icon? {
         val virtualFile = psiElement.containingFile?.virtualFile ?: return null
-        return ImageIconLoader.getIcon(virtualFile)
+        return service<ImageIconLoaderService>().getIcon(virtualFile)
     }
 }

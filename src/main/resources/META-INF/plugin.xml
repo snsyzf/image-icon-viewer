@@ -1,4 +1,4 @@
-<idea-plugin>
+<idea-plugin require-restart="false">
     <id>com.plugin.image-icon-viewer</id>
     <name>Image Icon Viewer</name>
     <vendor email="snsyzf@gmail.com" url="https://gitee.com/snsyzf/image-icon-viewer">snsyzf</vendor>
@@ -11,6 +11,11 @@
         <iconProvider implementation="com.gitee.plugins.iconviewer.ImageIconProvider" order="first"/>
         <fileIconProvider implementation="com.gitee.plugins.iconviewer.ImageFileIconProvider" order="first"/>
     </extensions>
+
+    <applicationListeners>
+        <listener class="com.gitee.plugins.iconviewer.ImageIconDynamicPluginListener"
+                  topic="com.intellij.ide.plugins.DynamicPluginListener"/>
+    </applicationListeners>
 
     <actions>
         <!-- Add your actions here -->

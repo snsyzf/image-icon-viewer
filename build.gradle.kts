@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.gitee.plugins"
-version = "1.0.17"
+version = "1.0.19"
 
 repositories {
     mavenCentral()

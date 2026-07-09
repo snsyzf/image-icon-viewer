@@ -1,6 +1,7 @@
 package com.gitee.plugins.iconviewer
 
 import com.intellij.ide.FileIconProvider
+import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import javax.swing.Icon
@@ -11,6 +12,6 @@ import javax.swing.Icon
 class ImageFileIconProvider : FileIconProvider {
 
     override fun getIcon(file: VirtualFile, flags: Int, project: Project?): Icon? {
-        return ImageIconLoader.getIcon(file)
+        return service<ImageIconLoaderService>().getIcon(file)
     }
 }
