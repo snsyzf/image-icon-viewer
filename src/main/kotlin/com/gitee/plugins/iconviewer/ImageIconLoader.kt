@@ -4,8 +4,12 @@ import com.google.common.cache.CacheBuilder
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.util.io.FileUtilRt
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.ui.scale.DerivedScaleType
+import com.intellij.ui.scale.ScaleContext
+import com.intellij.ui.svg.renderSvg
 import com.intellij.util.IconUtil
 import com.intellij.util.ImageLoader
+import com.intellij.util.ui.ImageUtil
 import java.awt.Image
 import java.util.Optional
 import javax.imageio.ImageIO
@@ -63,8 +67,23 @@ internal object ImageIconLoader {
     }
 
     private fun loadImage(file: VirtualFile): Image? {
+        val bytes = try {
+            file.contentsToByteArray()
+        } catch (e: Exception) {
+            LOG.debug("Failed to read file ${file.path}", e)
+            return null
+        }
+
+        val extension = FileUtilRt.getExtension(file.name).lowercase()
         return try {
-            ImageLoader.loadFromBytes(file.contentsToByteArray())
+            val scaleContext = ScaleContext.create()
+            when (extension) {
+                SVG_EXTENSION -> {
+                    val pixScale = scaleContext.getScale(DerivedScaleType.PIX_SCALE).toFloat()
+                    ImageUtil.ensureHiDPI(renderSvg(data = bytes, scale = pixScale), scaleContext)
+                }
+                else -> ImageLoader.loadFromBytes(bytes)
+            }
         } catch (e: Exception) {
             LOG.debug("Failed to decode image for ${file.path}", e)
             null
@@ -72,11 +91,18 @@ internal object ImageIconLoader {
     }
 
     private fun scaleToDefaultSize(image: Image): Image {
-        val width = image.getWidth(null)
-        val height = image.getHeight(null)
-        if (width <= 0 || height <= 0 || (width == DEFAULT_SIZE && height == DEFAULT_SIZE)) {
+        val userWidth = ImageUtil.getUserWidth(image)
+        val userHeight = ImageUtil.getUserHeight(image)
+        if (userWidth <= 0 || userHeight <= 0) {
             return image
         }
-        return ImageLoader.scaleImage(image, DEFAULT_SIZE)
+
+        val maxUserDim = maxOf(userWidth, userHeight)
+        if (maxUserDim <= DEFAULT_SIZE) {
+            return image
+        }
+
+        val scale = DEFAULT_SIZE.toDouble() / maxUserDim
+        return ImageLoader.scaleImage(image, scale)
     }
 }
